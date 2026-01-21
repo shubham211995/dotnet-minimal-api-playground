@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "DotNet.MinimalApi.Playground.Api/1.0.0": {
+        "runtime": {
+          "DotNet.MinimalApi.Playground.Api.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DotNet.MinimalApi.Playground.Api/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

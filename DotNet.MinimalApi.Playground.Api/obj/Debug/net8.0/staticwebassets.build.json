@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "vR1wpsUjOZgzd15AW+Puy+VabbHk6lg75rjd044kmt8=",
+  "Source": "DotNet.MinimalApi.Playground.Api",
+  "BasePath": "_content/DotNet.MinimalApi.Playground.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
