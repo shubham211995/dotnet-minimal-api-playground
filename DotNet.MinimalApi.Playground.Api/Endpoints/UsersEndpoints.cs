@@ -15,9 +15,29 @@ public static class UsersEndpoints
         .WithName("GetUsers")
         .WithTags("Users");
 
-        app.MapPost("/api/users", (User user) =>
+        app.MapPost("/api/users", (CreateUserRequest request) =>
         {
-            user.Id = Guid.NewGuid();
+            if (string.IsNullOrWhiteSpace(request.Name))
+            {
+                return Results.Problem(
+                    detail: "Name is required",
+                    statusCode: StatusCodes.Status400BadRequest);
+            }
+
+            if (string.IsNullOrWhiteSpace(request.Email))
+            {
+                return Results.Problem(
+                    detail: "Email is required",
+                    statusCode: StatusCodes.Status400BadRequest);
+            }
+
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Name = request.Name,
+                Email = request.Email
+            };
+
             Users.Add(user);
 
             return Results.Created($"/api/users/{user.Id}", user);
