@@ -1,21 +1,23 @@
-using DotNet.MinimalApi.Playground.Api.Models;
+using DotNet.MinimalApi.Playground.Api.Data;
+using DotNet.MinimalApi.Playground.Api.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotNet.MinimalApi.Playground.Api.Endpoints;
 
 public static class UsersEndpoints
 {
-    private static readonly List<User> Users = new();
 
     public static void MapUsersEndpoints(this WebApplication app)
     {
-        app.MapGet("/api/users", () =>
+        app.MapGet("/api/users", async (AppDbContext db) =>
         {
-            return Results.Ok(Users);
+            var users = db.Users.ToListAsync();
+            return Results.Ok(users);
         })
         .WithName("GetUsers")
         .WithTags("Users");
 
-        app.MapPost("/api/users", (CreateUserRequest request) =>
+        app.MapPost("/api/users", async (CreateUserRequest request, AppDbContext db) =>
         {
             if (string.IsNullOrWhiteSpace(request.Name))
             {
@@ -33,12 +35,13 @@ public static class UsersEndpoints
 
             var user = new User
             {
-                Id = Guid.NewGuid(),
                 Name = request.Name,
-                Email = request.Email
+                Email = request.Email,
+                CreatedAt = DateTime.UtcNow
             };
 
-            Users.Add(user);
+            db.Users.Add(user);
+            await db.SaveChangesAsync();
 
             return Results.Created($"/api/users/{user.Id}", user);
         })
