@@ -11,7 +11,7 @@ public static class UsersEndpoints
     {
         app.MapGet("/api/users", async (AppDbContext db) =>
         {
-            var users = db.Users.ToListAsync();
+            var users = await db.Users.ToListAsync();
             return Results.Ok(users);
         })
         .WithName("GetUsers")
