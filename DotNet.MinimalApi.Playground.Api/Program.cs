@@ -16,10 +16,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlite("Data Source=app.db");
 });
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 app.UseSerilogRequestLogging();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 app.UseMiddleware<GlobalExceptionMiddleware>();
