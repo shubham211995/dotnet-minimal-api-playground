@@ -38,3 +38,8 @@ app.MapUsersEndpoints();
 app.MapHealthEndpoint();
 
 app.Run();
+
+namespace  DotNet.MinimalApi.Playground.Api
+{
+    public partial class Program { }   
+}
