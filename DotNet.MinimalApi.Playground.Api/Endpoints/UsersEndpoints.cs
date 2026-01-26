@@ -2,6 +2,7 @@ using DotNet.MinimalApi.Playground.Api.Data;
 using DotNet.MinimalApi.Playground.Api.Entities;
 using DotNet.MinimalApi.Playground.Api.Dtos;
 using Microsoft.EntityFrameworkCore;
+using DotNet.MinimalApi.Playground.Api.Filters;
 
 namespace DotNet.MinimalApi.Playground.Api.Endpoints;
 
@@ -20,20 +21,6 @@ public static class UsersEndpoints
 
         app.MapPost("/api/users", async (CreateUserRequest request, AppDbContext db) =>
         {
-            if (string.IsNullOrWhiteSpace(request.Name))
-            {
-                return Results.Problem(
-                    detail: "Name is required",
-                    statusCode: StatusCodes.Status400BadRequest);
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Email))
-            {
-                return Results.Problem(
-                    detail: "Email is required",
-                    statusCode: StatusCodes.Status400BadRequest);
-            }
-
             var user = new User
             {
                 Name = request.Name,
@@ -46,6 +33,7 @@ public static class UsersEndpoints
 
             return Results.Created($"/api/users/{user.Id}", user);
         })
+        .AddEndpointFilter<ValidationFilter<CreateUserRequest>>()
         .WithName("CreateUser")
         .WithTags("Users");
     }
