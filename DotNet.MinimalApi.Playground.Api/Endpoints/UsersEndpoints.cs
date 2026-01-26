@@ -36,5 +36,10 @@ public static class UsersEndpoints
         .AddEndpointFilter<ValidationFilter<CreateUserRequest>>()
         .WithName("CreateUser")
         .WithTags("Users");
+
+        app.MapGet("/crash", () =>
+        {
+            throw new Exception("Boom!!");
+        });
     }
 }
